@@ -5,18 +5,18 @@ import { TRegisterData } from '@api';
 import { register } from '../../services/slices/userSlice';
 
 export const Register: FC = () => {
-  const dispatch = useDispatch();
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
 
     const userReg: TRegisterData = {
-      email: email,
+      email,
       name: userName,
-      password: password
+      password
     };
 
     dispatch(register(userReg));

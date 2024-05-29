@@ -16,7 +16,8 @@ import { AppHeader, Modal, OrderInfo, IngredientDetails } from '@components';
 import { useDispatch } from '../../services/store';
 import { useEffect } from 'react';
 import { getIngredients } from '../../services/slices/ingredientsSlice';
-import { ProtectedRoute } from '../protected-route/protected-route';
+import { apiGetUser } from '../../services/slices/userSlice';
+//import { ProtectedRoute } from '../protected-route/protected-route';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -26,7 +27,8 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getIngredients());
-  }, []);
+    dispatch(apiGetUser());
+  }, [dispatch]);
 
   return (
     <div className={styles.app}>

@@ -1,8 +1,8 @@
-import { TConstructorIngredient } from '@utils-types';
+import { TConstructorIngredient, TIngredient } from '@utils-types';
 import { createSlice } from '@reduxjs/toolkit';
 
 export interface ConstructorBurgerState {
-  bun: TConstructorIngredient | null;
+  bun: TIngredient | null;
   ingredients: TConstructorIngredient[];
 }
 

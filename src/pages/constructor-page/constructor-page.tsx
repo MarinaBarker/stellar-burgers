@@ -5,17 +5,12 @@ import { getLoadingIngredients } from '../../services/slices/ingredientsSlice';
 import { BurgerIngredients } from '../../components';
 import { BurgerConstructor } from '../../components';
 import { Preloader } from '../../components/ui';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 
 export const ConstructorPage: FC = () => {
   /** TODO: взять переменную из стора */
   const isLoading = useSelector(getLoadingIngredients);
   const isIngredientsLoading = isLoading;
-  //const dispatch = useDispatch();
-
-  //useEffect(() => {
-  //dispatch(getApiIngredients());
-  //}, [dispatch]);
 
   return (
     <>

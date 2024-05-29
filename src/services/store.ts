@@ -9,11 +9,13 @@ import {
 import { ingredientsReduce } from './slices/ingredientsSlice';
 import { burgerReduce } from './slices/constructorBurgerSlice';
 import { userReduce } from './slices/userSlice';
+import { orderReduce } from './slices/orderSlice';
 
 export const rootReducer = combineReducers({
   ingredients: ingredientsReduce,
   burger: burgerReduce,
-  user: userReduce
+  user: userReduce,
+  orders: orderReduce
 }); // Заменить на импорт настоящего редьюсера
 
 const store = configureStore({
