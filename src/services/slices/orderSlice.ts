@@ -26,12 +26,24 @@ const initialState: InitialState = {
   orderModalData: null
 };
 
-export const getOrders = createAsyncThunk('orders/getOrders', getOrdersApi);
-export const getFeeds = createAsyncThunk('feed/get', getFeedsApi);
+export const getOrders = createAsyncThunk('orders/getOrders', async () => {
+  const response = await getOrdersApi();
+  return response;
+});
+
+export const getFeeds = createAsyncThunk('feed/get', async () => {
+  const response = await getFeedsApi();
+  return response;
+});
+
 export const getOrderByNumber = createAsyncThunk(
   'orders/getOrder',
-  getOrderByNumberApi
+  async (number: number) => {
+    const response = await getOrderByNumberApi(number);
+    return response;
+  }
 );
+
 export const createOrder = createAsyncThunk(
   'orders/create',
   async (ingredientIds: string[]) => {

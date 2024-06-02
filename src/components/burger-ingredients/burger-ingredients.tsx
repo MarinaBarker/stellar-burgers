@@ -7,14 +7,21 @@ import { useSelector } from '../../services/store';
 import {
   getIngredientsBuns,
   getIngredientsMains,
-  getIngredientsSauces
+  getIngredientsSauces,
+  getIngredientsState
 } from '../../services/slices/ingredientsSlice';
 
 export const BurgerIngredients: FC = () => {
   /** TODO: взять переменные из стора */
-  const buns = useSelector(getIngredientsBuns);
-  const mains = useSelector(getIngredientsMains);
-  const sauces = useSelector(getIngredientsSauces);
+  const ingredients = useSelector(getIngredientsState);
+  const buns = ingredients.filter((ingredient) => ingredient.type === 'bun');
+  const mains = ingredients.filter((ingredient) => ingredient.type === 'main');
+  const sauces = ingredients.filter(
+    (ingredient) => ingredient.type === 'sauce'
+  );
+  //const buns = useSelector(getIngredientsBuns);
+  //const mains = useSelector(getIngredientsMains);
+  //const sauces = useSelector(getIngredientsSauces);
 
   const [currentTab, setCurrentTab] = useState<TTabMode>('bun');
   const titleBunRef = useRef<HTMLHeadingElement>(null);

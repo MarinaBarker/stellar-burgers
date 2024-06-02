@@ -9,8 +9,7 @@ import { FC } from 'react';
 
 export const ConstructorPage: FC = () => {
   /** TODO: взять переменную из стора */
-  const isLoading = useSelector(getLoadingIngredients);
-  const isIngredientsLoading = isLoading;
+  const isIngredientsLoading = useSelector(getLoadingIngredients);
 
   return (
     <>

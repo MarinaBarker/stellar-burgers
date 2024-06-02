@@ -3,7 +3,6 @@ import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
 import { useSelector, useDispatch } from '../../services/store';
 import { useNavigate } from 'react-router-dom';
-import { isAuthCheckedSelector } from '../../services/slices/userSlice';
 import {
   createOrder,
   getOrderModalData,
@@ -19,7 +18,7 @@ export const BurgerConstructor: FC = () => {
   const orderRequest = useSelector(getOrderRequest);
   const orderModalData = useSelector(getOrderModalData);
 
-  const isAuth = useSelector(isAuthCheckedSelector);
+  const isAuth = useSelector((state) => state.user.isAuth);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
