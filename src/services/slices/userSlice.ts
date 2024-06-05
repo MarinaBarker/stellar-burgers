@@ -42,10 +42,15 @@ export const register = createAsyncThunk(
 export const login = createAsyncThunk(
   'users/loginUser',
   async (data: TLoginData) => {
-    const response = await loginUserApi(data);
-    localStorage.setItem('refreshToken', response.refreshToken);
-    setCookie('accessToken', response.accessToken);
-    return response;
+    try {
+      const response = await loginUserApi(data);
+      localStorage.setItem('refreshToken', response.refreshToken);
+      setCookie('accessToken', response.accessToken);
+      return response;
+    } catch (error) {
+      console.log('Неудалось войти. Ошибка:', error);
+      throw error;
+    }
   }
 );
 

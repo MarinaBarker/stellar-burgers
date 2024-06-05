@@ -11,13 +11,18 @@ import {
 } from '@pages';
 import '../../index.css';
 import styles from './app.module.css';
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import {
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+  Navigate
+} from 'react-router-dom';
 import { AppHeader, Modal, OrderInfo, IngredientDetails } from '@components';
-import { useDispatch } from '../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
 import { useEffect } from 'react';
 import { getIngredients } from '../../services/slices/ingredientsSlice';
 import { apiGetUser } from '../../services/slices/userSlice';
-import { ProtectedRoute } from '../protected-route/protected-route';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -127,6 +132,31 @@ const App = () => {
       )}
     </div>
   );
+};
+
+type ProtectedRouteProps = {
+  onlyUnAuth?: boolean;
+  children: React.ReactElement;
+};
+
+export const ProtectedRoute = ({
+  onlyUnAuth = false,
+  children
+}: ProtectedRouteProps) => {
+  //const isAuthChecked = useSelector((state) => state.user.isAuthChecked);
+  const user = useSelector((state) => state.user.user);
+  const location = useLocation();
+
+  if (!onlyUnAuth && !user.name) {
+    return <Navigate to='/login' state={{ from: location }} />;
+  }
+
+  if (onlyUnAuth && user.name) {
+    const { from } = location.state?.from || { from: { pathname: '/' } };
+    return <Navigate replace to={from} />;
+  }
+
+  return children;
 };
 
 export default App;

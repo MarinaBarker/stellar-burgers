@@ -6,8 +6,6 @@ import { RootState } from '../store';
 
 export interface InitialState {
   items: TOrder[];
-  feed: TFeedsResponse | null;
-  feedItems: TOrder[];
   modalOrder: TOrder | null;
   loading: boolean;
   error: string | undefined;
@@ -18,8 +16,6 @@ export interface InitialState {
 const initialState: InitialState = {
   items: [],
   modalOrder: null,
-  feedItems: [],
-  feed: null,
   loading: false,
   error: undefined,
   orderRequest: false,
@@ -28,11 +24,6 @@ const initialState: InitialState = {
 
 export const getOrders = createAsyncThunk('orders/getOrders', async () => {
   const response = await getOrdersApi();
-  return response;
-});
-
-export const getFeeds = createAsyncThunk('feed/get', async () => {
-  const response = await getFeedsApi();
   return response;
 });
 
@@ -59,10 +50,12 @@ const orderSlice = createSlice({
     resetOrderModalData(state) {
       state.orderModalData = null;
       state.orderRequest = false;
+    },
+    setOrderLoading(state, action) {
+      state.loading = action.payload;
     }
   },
   selectors: {
-    getFeedItems: (state) => state.feedItems,
     getOrderItems: (state) => state.items,
     getOrderRequest: (state) => state.orderRequest,
     getOrderModalData: (state) => state.orderModalData
@@ -90,22 +83,11 @@ const orderSlice = createSlice({
       })
       .addCase(getOrderByNumber.fulfilled, (state, action) => {
         state.modalOrder = action.payload.orders[0];
-      })
-      .addCase(getFeeds.fulfilled, (state, action) => {
-        state.feed = action.payload;
-        state.feedItems = action.payload.orders;
-      })
-      .addCase(getFeeds.rejected, (state) => {
-        state.feed = null;
       });
   }
 });
 
-export const {
-  getFeedItems,
-  getOrderItems,
-  getOrderRequest,
-  getOrderModalData
-} = orderSlice.selectors;
-export const { resetOrderModalData } = orderSlice.actions;
+export const { getOrderItems, getOrderRequest, getOrderModalData } =
+  orderSlice.selectors;
+export const { resetOrderModalData, setOrderLoading } = orderSlice.actions;
 export const orderReduce = orderSlice.reducer;

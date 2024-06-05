@@ -10,6 +10,7 @@ import {
   resetOrderModalData
 } from '../../services/slices/orderSlice';
 import { clearBurger } from '../../services/slices/constructorBurgerSlice';
+import { getFeeds } from '../../services/slices/feedSlice';
 
 export const BurgerConstructor: FC = () => {
   /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
@@ -24,19 +25,23 @@ export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
 
   const onOrderClick = () => {
-    if (!constructorItems.bun || orderRequest) return;
+    if (!constructorItems.bun || orderRequest) {
+      alert('Добавьте булочки');
+      return;
+    }
     const order = constructorItems.ingredients.map(
       (ingredient) => ingredient._id
     );
     order.push(constructorItems.bun._id);
     order.unshift(constructorItems.bun._id);
 
-    if (!isAuth) {
+    if (isAuth) {
       dispatch(createOrder(order));
     } else {
       return navigate('/login');
     }
   };
+
   const closeOrderModal = () => {
     dispatch(resetOrderModalData());
     dispatch(clearBurger());
