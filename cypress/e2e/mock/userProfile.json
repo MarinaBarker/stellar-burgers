@@ -1,0 +1,9 @@
+{
+    "success": true,
+    "accessToken": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NWM5MGZmOTdlZGUwMDAxZDA2ZTUyMSIsImlhdCI6MTcxODU2ODI5NywiZXhwIjoxNzE4NTY5NDk3fQ.nM4k6xV3v1T_WX-A_v9sUOXd8IkFmFDG_wsOn_jdk8A",
+    "refreshToken": "62e0cfad755a69ec21231b0a0a476278d8ee3f472a0a3f6a5bf4e8181d9055732559a2ab9f8c673b",
+    "user": {
+      "email": "marinka-0000@mail.ru",
+      "name": "Marina"
+    }
+  }
