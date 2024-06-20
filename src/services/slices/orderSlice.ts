@@ -8,16 +8,16 @@ export interface InitialState {
   items: TOrder[];
   modalOrder: TOrder | null;
   loading: boolean;
-  error: string | undefined;
+  error: boolean;
   orderRequest: boolean;
   orderModalData: null | TOrder;
 }
 
-const initialState: InitialState = {
+export const initialState: InitialState = {
   items: [],
   modalOrder: null,
   loading: false,
-  error: undefined,
+  error: false,
   orderRequest: false,
   orderModalData: null
 };
@@ -64,6 +64,7 @@ const orderSlice = createSlice({
     builder
       .addCase(getOrders.pending, (state) => {
         state.loading = true;
+        state.error = false;
       })
       .addCase(getOrders.fulfilled, (state, action) => {
         state.loading = false;
@@ -71,7 +72,7 @@ const orderSlice = createSlice({
       })
       .addCase(getOrders.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = true;
       })
       .addCase(createOrder.fulfilled, (state, action) => {
         state.items.push(action.payload);
