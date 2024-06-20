@@ -6,12 +6,14 @@ export type TIngredientState = {
   ingredients: TIngredient[];
   loading: boolean;
   error: string | null;
+  status: 'failed' | 'success' | 'loading' | 'idle';
 };
 
 export const initialState: TIngredientState = {
   ingredients: [],
   loading: false,
-  error: null
+  error: null,
+  status: 'idle'
 };
 
 export const getIngredients = createAsyncThunk(
@@ -39,15 +41,18 @@ export const ingredientSlice = createSlice({
       .addCase(getIngredients.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.status = 'loading';
       })
       .addCase(getIngredients.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message as string;
+        state.status = 'failed';
       })
       .addCase(getIngredients.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
         state.ingredients = action.payload;
+        state.status = 'success';
       });
   }
 });

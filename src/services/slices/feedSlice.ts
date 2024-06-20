@@ -4,15 +4,15 @@ import { getFeedsApi } from '@api';
 import { RootState } from '../store';
 
 export interface FeedState {
-  error: string | null;
+  error: boolean;
   loading: boolean;
   total: number;
   orders: TOrder[];
   totalToday: number;
 }
 
-const initialState: FeedState = {
-  error: null,
+export const initialState: FeedState = {
+  error: false,
   loading: false,
   total: 0,
   orders: [],
@@ -29,7 +29,8 @@ export const feedSlice = createSlice({
     builder
       .addCase(getFeeds.pending, (state) => {
         state.loading = true;
-        state.error = null;
+        //state.error = null;
+        state.error = false;
       })
       .addCase(getFeeds.fulfilled, (state, action) => {
         state.orders = action.payload.orders;
@@ -39,7 +40,8 @@ export const feedSlice = createSlice({
       })
       .addCase(getFeeds.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message as string;
+        //state.error = action.error.message as string;
+        state.error = true;
       });
   }
 });

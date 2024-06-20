@@ -1,5 +1,5 @@
 import { TUser } from '@utils-types';
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {
   TRegisterData,
   getUserApi,
@@ -16,7 +16,7 @@ export interface TUserState {
   user: TUser;
   isAuth: boolean;
   isAuthChecked: boolean;
-  error: string | undefined;
+  error: string | null;
 }
 
 export const initialState: TUserState = {
@@ -24,7 +24,7 @@ export const initialState: TUserState = {
     email: '',
     name: ''
   },
-  error: '',
+  error: null,
   isAuth: false,
   isAuthChecked: false
 };
@@ -78,6 +78,9 @@ export const userSlice = createSlice({
   reducers: {
     authChecked: (state) => {
       state.isAuthChecked = true;
+    },
+    getUser: (state, action) => {
+      state.user = action.payload;
     }
   },
   selectors: {
@@ -127,18 +130,26 @@ export const userSlice = createSlice({
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.isAuthChecked = false;
-        state.error = action.error.message!;
+        state.error = '';
       })
       .addCase(updateUser.pending, (state) => {
         state.error = '';
       });
-    builder.addCase(logout.fulfilled, (state) => {
-      state.isAuth = false;
-      state.user = { email: '', name: '' };
-    });
+    builder
+      .addCase(logout.fulfilled, (state) => {
+        state.isAuth = false;
+        state.user = { email: '', name: '' };
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.error = '';
+      })
+      .addCase(logout.pending, (state, action) => {
+        state.error = null;
+      });
   }
 });
 
 export const { isAuth } = userSlice.selectors;
+export const { authChecked, getUser } = userSlice.actions;
 export const getUserSelector = (store: RootState) => store.user.user;
 export const userReduce = userSlice.reducer;

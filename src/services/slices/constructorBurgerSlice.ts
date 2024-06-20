@@ -6,7 +6,7 @@ export interface ConstructorBurgerState {
   ingredients: TConstructorIngredient[];
 }
 
-const initialState: ConstructorBurgerState = {
+export const initialState: ConstructorBurgerState = {
   bun: null,
   ingredients: []
 };
@@ -35,6 +35,18 @@ const burgerConstructorSlice = createSlice({
         state.ingredients[index]
       ];
     },
+    moveUpIngredient: (state, action) => {
+      const ingredient = state.ingredients[action.payload];
+
+      state.ingredients.splice(action.payload, 1);
+      state.ingredients.splice(action.payload - 1, 0, ingredient);
+    },
+    moveDownIngredient: (state, action) => {
+      const ingredient = state.ingredients[action.payload];
+
+      state.ingredients.splice(action.payload, 1);
+      state.ingredients.splice(action.payload + 1, 0, ingredient);
+    },
     clearBurger: (state) => (state = initialState)
   },
   selectors: {
@@ -48,6 +60,8 @@ export const {
   removeBurger,
   clearBurger,
   handleBurgerPosition,
-  setBun
+  setBun,
+  moveDownIngredient,
+  moveUpIngredient
 } = burgerConstructorSlice.actions;
 export const burgerReduce = burgerConstructorSlice.reducer;
